@@ -1,0 +1,73 @@
+
+<div class="flex flex-col h-screen max-w-md mx-auto bg-white shadow-2xl overflow-hidden relative">
+  
+  <!-- Header Image Area -->
+  <div class="h-32 bg-rose-200 relative shrink-0">
+    <img src="https://picsum.photos/id/292/800/400" alt="Bakery Header" class="w-full h-full object-cover opacity-80">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+      <div>
+        <h1 class="text-white text-2xl font-bold">CakeBiz Mentor</h1>
+        <p class="text-rose-100 text-sm">আপনার ১ মাসের বিজনেস জার্নি</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="flex border-b border-rose-100 bg-white shrink-0">
+    <button 
+      (click)="setTab('roadmap')"
+      class="flex-1 py-3 text-sm font-semibold text-center transition-colors relative"
+      [class.text-rose-600]="activeTab() === 'roadmap'"
+      [class.text-slate-500]="activeTab() !== 'roadmap'"
+    >
+      রোডম্যাপ (Roadmap)
+      @if (activeTab() === 'roadmap') {
+        <div class="absolute bottom-0 left-0 w-full h-0.5 bg-rose-500"></div>
+      }
+    </button>
+    <button 
+      (click)="setTab('chat')"
+      class="flex-1 py-3 text-sm font-semibold text-center transition-colors relative"
+      [class.text-rose-600]="activeTab() === 'chat'"
+      [class.text-slate-500]="activeTab() !== 'chat'"
+    >
+      মেন্টর চ্যাট (Chat)
+      @if (activeTab() === 'chat') {
+        <div class="absolute bottom-0 left-0 w-full h-0.5 bg-rose-500"></div>
+      }
+    </button>
+  </div>
+
+  <!-- Content Area -->
+  <div class="flex-1 overflow-hidden bg-rose-50/50 relative">
+    
+    <!-- Roadmap View -->
+    @if (activeTab() === 'roadmap') {
+      <div class="h-full overflow-y-auto p-4 animate-fadeIn">
+        <app-roadmap 
+          [plan]="roadmapData()" 
+          [loading]="isRoadmapLoading()"
+          (onGenerate)="generatePlan()">
+        </app-roadmap>
+      </div>
+    }
+
+    <!-- Chat View -->
+    @if (activeTab() === 'chat') {
+      <div class="h-full p-2 animate-fadeIn">
+        <app-chat></app-chat>
+      </div>
+    }
+
+  </div>
+</div>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+</style>
